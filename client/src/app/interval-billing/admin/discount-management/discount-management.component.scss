@@ -1,0 +1,112 @@
+.discount {
+    width: 600px;
+    max-width: 600px;
+
+    &__head {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+    }
+
+    &__create-btn {
+        padding: 0;
+
+        .icon {
+            top: 3px;
+            left: -2px;
+
+            &:before {
+                font-style: normal;
+            }
+
+            &:after {
+                background: transparent !important;
+            }
+        }
+    }
+
+    &__title {
+        font-size: 24px;
+        color: #fff;
+        letter-spacing: 0;
+        font-weight: normal;
+    }
+    &__subtitle {
+        font-size: 14px;
+        color: #7e7e7e;
+        letter-spacing: 0.2px;
+    }
+
+    &__hr {
+        border-top: 1px solid #454545;
+    }
+
+    &__item {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        padding: 1rem;
+        margin: 0.5rem 0;
+        background: #2b2b2b;
+        border-radius: 2px;
+
+        &--disabled {
+            background: #1f1f1f;
+
+            .discount__item-title {
+                color: #7e7e7e;
+            }
+        }
+    }
+
+    &__item-title {
+        color: #fff;
+        letter-spacing: 0.1px;
+        cursor: default;
+    }
+
+
+    &__item-description {
+        font-size: 12px;
+        color: #7e7e7e;
+        letter-spacing: 0.3px;
+        cursor: default;
+    }
+
+    &__item-info-section {
+        width: 45%;
+        max-width: 45%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    &__item-date-section {
+        font-size: 10px;
+        color: #7e7e7e;
+        text-transform: uppercase;
+        border-right: 1px solid #454545;
+        padding-right: 1.5rem;
+        margin-right: 1.5rem;
+        cursor: default;
+    }
+
+    &__item-controls-section {
+        display: flex;
+        align-items: center;
+    }
+
+    &__details-btn {
+        padding: 0;
+        margin-right: 1rem;
+    }
+
+    &__copy,
+    &__remove {
+        margin: 0 .5rem;
+    }
+
+    &__switch {
+        margin-left: 1rem;
+    }
+}

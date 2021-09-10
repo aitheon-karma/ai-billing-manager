@@ -1,0 +1,35 @@
+.title {
+  margin: 0;
+  color: rgb(255, 255, 255);
+  font-size: 32px;
+  font-weight: normal;
+  letter-spacing: 0;
+  line-height: 40px;
+}
+
+.payment-list {
+  display: grid;
+  grid-gap: 24px;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.modal-header--confirmation {
+  border-bottom: none !important;
+  padding-bottom: 0;
+}
+
+.text {
+  color: rgb(126, 126, 126);
+  font-size: 14px;
+  font-weight: normal;
+  letter-spacing: 0.2px;
+  line-height: 20px;
+
+  &--white {
+    color: #ffffff;
+  }
+
+  &--gray {
+    color: rgb(126, 126, 126);
+  }
+}

@@ -1,0 +1,41 @@
+<div class="row m-0">
+  <div class="col-4 pl-0">
+    <div class="services">
+      <hr class="services__hr">
+      <div class="services__container" *ngIf="services; else loadingView" >
+        <form class="search-form" novalidate [formGroup]="searchForm">
+          <div  class="search-container search-container__outlined"
+                [class.search-container--filled]="search.value.length">
+            <input  type="search" 
+                    placeholder="Search" 
+                    class="search-container__input" 
+                    #search
+                    (ngModelChange)="onServiceSearch($event)"
+                    formControlName="search">
+            <div class="search-container__button icon icon--search icon--size-16px"></div>
+            <div  class="search-container__button icon icon--close icon--dynamic icon--size-16px"
+                  (click)="clearSearch()"></div>
+          </div>
+        </form>
+        <div class="services__table table" >
+          <div class="row table__item" *ngFor="let service of services" (click)='selectService(service)'>
+            <div class="table__item-section col-3 pl-0 pr-1">
+              <span class="table__service-icon service-icon {{ service.slug }}"></span>
+              <span class="table__service-name">{{ service.name }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-8 pr-0">
+    <div class="services__details-section" *ngIf='selectedService'>
+      <ai-service-details (saved)="loadServicesPrices()" [prices]="prices" [priceType]="tab" [service]="selectedService"></ai-service-details>
+    </div>
+  </div>
+</div>
+
+
+<ng-template #loadingView>
+  <ai-loading class="d-flex"></ai-loading>
+</ng-template>

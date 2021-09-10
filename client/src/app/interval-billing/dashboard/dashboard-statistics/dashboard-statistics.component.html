@@ -1,0 +1,44 @@
+<div class="statistics">
+  <div class="statistics__filters">
+    <button type="button"
+            [class.statistics__filter--active]="activeButton === 'today'"
+            (click)="onChangeDateRange('today', $event)"
+            class="statistics__filter pl-0 btn btn-link">
+      today
+    </button>
+    <button type="button"
+            [class.statistics__filter--active]="activeButton === 'week'"
+            (click)="onChangeDateRange('week', $event)"
+            class="statistics__filter btn btn-link">
+      week
+    </button>
+    <button type="button"
+            [class.statistics__filter--active]="activeButton === 'month'"
+            (click)="onChangeDateRange('month', $event)"
+            class="statistics__filter btn btn-link pr-3">
+      month
+    </button>
+    <div class="statistics__date-range input-wrap input-wrap--date-outlined"
+         [class.input-wrap--date-filled]="dateRange.valid"
+         [class.statistics__date-range--empty]="!dateRange.valid">
+      <input (blur)="clearActiveButton($event)"
+             type="text"
+             placeholder="From  -  To"
+             class="input-wrap__input"
+             bsDaterangepicker
+             placement="right"
+             readonly
+             [maxDate]="currentDate"
+             [formControl]="dateRange"
+             [bsConfig]="{ showWeekNumbers: false, rangeInputFormat: 'MMM D, YYYY'}">
+      <div class="input-wrap--date-clear icon icon--close icon--dynamic icon--size-16px"
+           (click)="clearFormControl($event)"></div>
+    </div>
+  </div>
+    <ai-table [collection]="billingStatistics"
+              title="Billing statistics"
+              searchBy="label"
+              [columns]="listColumns"
+              [loading]="loading">
+    </ai-table>
+</div>

@@ -1,0 +1,65 @@
+<div class="d-flex align-items-center justify-content-start mb--24">
+  <h1 class="title">
+    Services
+  </h1>
+  <!-- Payment Status -->
+  <span class="status-label" *ngIf="status" [ngClass]="status.className">
+    {{ status.name | titlecase }} subscription
+  </span>
+   <!-- /Payment Status -->
+</div>
+
+<div class="services-dashboard">
+  <div class="services-dashboard__header">
+    <h3 class="services-dashboard__header__title">
+      Total monthly fee: <span class="pl--4">{{ totalFee | currency: 'USD' }}</span>
+    </h3>
+    <button class="button button--ghost button--medium" (click)="expandInfo = !expandInfo">
+      {{ expandInfo ? 'Minimized' : 'Expand' }}
+      <span class="icon icon--gold mr--0"
+            [ngClass]="expandInfo ? 'icon--arrow-drop-up' : 'icon--arrow-drop-down'">
+      </span>
+    </button>
+  </div>
+  <div class="services-dashboard__info" [class.services-dashboard__info--show]="expandInfo">
+    <div class="services-dashboard__info__list">
+      <ul class="services-list">
+        <li class="services-list__item"
+            *ngFor="let serviceInfo of servicesInfo"
+            (click)="manageService(serviceInfo.service)">
+          <span>
+            {{ serviceInfo.name }}
+          </span>
+          <span>
+            {{ serviceInfo.totalPrice | currency: 'USD'  }}
+          </span>
+        </li>
+      </ul>
+    </div>
+    <div class="services-dashboard__info__chart">
+      <!-- Circle Chart -->
+      <ngx-charts-pie-chart
+        [view]="[500, 300]"
+        [scheme]="{domain: ['#615438']}"
+        [results]="chartValues"
+        [explodeSlices]="false"
+        [labels]="true"
+        [doughnut]="false"
+        [maxLabelLength]="15"
+        [tooltipText]="changePieTooltip"
+        (select)="onSelectPie($event)">
+      </ngx-charts-pie-chart>
+    </div>
+  </div>
+</div>
+
+<div class="services-card-list">
+  <ai-dashboard-card *ngFor="let serviceInfo of servicesInfo"
+                     (manageServiceEvent)="manageService($event)"
+                     [service]="serviceInfo">
+  </ai-dashboard-card>
+</div>
+
+
+
+

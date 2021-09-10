@@ -1,0 +1,73 @@
+<div class="most-used">
+    <div class="most-used__head">
+        <h2 class="most-used__title">Most used services</h2>
+        <div class="most-used__filters">
+            <button type="button"
+                    [class.most-used__filter--active]="activeButton === 'today'"
+                    (click)="onChangeDateRange('today', $event)"
+                    class="most-used__filter btn btn-link">
+                today
+            </button>
+            <button type="button"
+                    [class.most-used__filter--active]="activeButton === 'daily'"
+                    (click)="onChangeDateRange('daily', $event)"
+                    class="most-used__filter btn btn-link">
+                daily
+            </button>
+            <button type="button"
+                    [class.most-used__filter--active]="activeButton === 'weekly'"
+                    (click)="onChangeDateRange('weekly', $event)"
+                    class="most-used__filter btn btn-link">
+                weekly
+            </button>
+            <button type="button"
+                    [class.most-used__filter--active]="activeButton === 'monthly'"
+                    (click)="onChangeDateRange('monthly', $event)"
+                    class="most-used__filter btn btn-link pr-3">
+                monthly
+            </button>
+            <div class="most-used__date-range input-wrap input-wrap--date-outlined"
+                 [class.input-wrap--date-filled]="dateRange.valid"
+                 [class.most-used__date-range--empty]="!dateRange.valid">
+                <input type="text"
+                       placeholder="From  -  To"
+                       class="input-wrap__input"
+                       bsDaterangepicker
+                       placement="bottom"
+                       readonly
+                       [formControl]="dateRange"
+                       [maxDate]="currentDate"
+                       [bsConfig]="{ showWeekNumbers: false, rangeInputFormat: 'MMM D, YYYY'}">
+                <div class="input-wrap--date-clear icon icon--close icon--dynamic icon--size-16px"
+                     (click)="clearDate($event)"></div>
+            </div>
+        </div>
+    </div>
+    <div class="most-used__graph">
+        <ngx-combo-chart [view]="view"
+                         *ngIf="!loading && options.length; else chart"
+                         [scheme]="colorScheme"
+                         [results]="options"
+                         [curve]="curve"
+                         [gradient]="gradient"
+                         [xAxis]="showXAxis"
+                         [yAxis]="showYAxis"
+                         [legend]="showLegend"
+                         [showXAxisLabel]="showXAxisLabel"
+                         [showYAxisLabel]="showYAxisLabel"
+                         [yAxisTickFormatting]="yAxisTickFormattingFn"
+                         [xAxisLabel]="xAxisLabel"
+                         [yAxisLabel]="yAxisLabel"
+                         legendPosition="below"
+                         [colorSchemeLine]="lineChartScheme"
+                         [lineChart]="lineChartSeries"
+                         [legendTitle]="null">
+        </ngx-combo-chart>
+        <ng-template #chart>
+            <div class="d-flex align-items-center justify-content-center h-100">
+                <ai-loading *ngIf="loading"></ai-loading>
+                <div class="most-used__graph-empty-message" *ngIf="!loading">No data to display</div>
+            </div>
+        </ng-template>
+    </div>
+</div>

@@ -1,0 +1,143 @@
+<ng-template #paymentMethodTemplate>
+      <div class="modal-header py-2" *ngIf="createAccountMode">
+        <h4 class="modal-title pull-left mt--8 mb--8 d-flex align-items-center">
+          New Payment Account
+        </h4>
+        <button type="button" class="icon icon--dynamic icon--close pull-right" aria-label="Close" *ngIf="!loading" (click)="close()">
+        </button>
+      </div>
+      <div class="modal-body pb-0">
+        <div class="p-method__container" *ngIf="!loading; else loadingView">
+          <div class="buy-acu" id="account-form">
+            <div class="p-method__create-account"
+                 *ngIf="createAccountMode">
+              <form [formGroup]="createAccountForm"
+                    (ngSubmit)="onAccountSubmit()">
+                <div class="p-method__create-account-section">
+                  <label class="p-method__label"
+                         [hidden]="accountSubmitted && createAccountForm.get('cardHolderFirstName').invalid">
+                    First name
+                  </label>
+                  <label class="p-method__label p-method__label--error"
+                         *ngIf="accountSubmitted && createAccountForm.get('cardHolderFirstName').invalid">
+                    First name is required
+                  </label>
+                  <div class="input-wrap input-wrap--contained input-wrap--small"
+                       [class.input-wrap--error]="accountSubmitted && createAccountForm.get('cardHolderFirstName').invalid">
+                    <input type="text"
+                           class="input-wrap__input"
+                           formControlName="cardHolderFirstName">
+                  </div>
+                </div>
+                <div class="p-method__create-account-section">
+                  <label class="p-method__label"
+                         [hidden]="accountSubmitted && createAccountForm.get('cardHolderLastName').invalid">
+                    Last name
+                  </label>
+                  <label class="p-method__label p-method__label--error"
+                         *ngIf="accountSubmitted && createAccountForm.get('cardHolderLastName').invalid">
+                    Last name is required
+                  </label>
+                  <div class="input-wrap input-wrap--contained input-wrap--small"
+                       [class.input-wrap--error]="accountSubmitted && createAccountForm.get('cardHolderLastName').invalid">
+                    <input type="text"
+                           class="input-wrap__input"
+                           formControlName="cardHolderLastName">
+                  </div>
+                </div>
+                <hr class="p-method__hr-solid">
+                <div class="p-method__create-account-section">
+                  <div class="p-method__create-account-container mb--24">
+                    <div class="p-method__card-number">
+                      <label class="p-method__label"
+                             [hidden]="accountSubmitted && createAccountForm.get('creditCard').invalid">
+                        Card number
+                      </label>
+                      <label class="p-method__label p-method__label--error"
+                             *ngIf="accountSubmitted && createAccountForm.get('creditCard').hasError('required')">
+                        Card number is required
+                      </label>
+                      <label class="p-method__label p-method__label--error"
+                             *ngIf="accountSubmitted && createAccountForm.get('creditCard').invalid && createAccountForm.get('creditCard').value.length > 1">
+                        Card number is invalid
+                      </label>
+
+                      <div class="p-method__number-input input-wrap input-wrap--card input-wrap--contained input-wrap--small"
+                           [ngClass]="{'input-wrap--invalid': (accountSubmitted && createAccountForm.get('creditCard').invalid)}">
+                        <input type="text"
+                               class="input-wrap__input"
+                               id="creditCard"
+                               digitOnly
+                               formControlName="creditCard"
+                               data-bluesnap="encryptedCreditCard">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="p-method__create-account-container mb--24">
+                    <div class="p-method__dates-section">
+                      <label  class="p-method__label">Expiry Date</label>
+                      <div class="p-method__dates">
+                        <div class="p-method__card-month">
+                          <ng-select class="dropdown dropdown--contained"
+                                     [class.dropdown--error]="accountSubmitted && createAccountForm.get('expirationMonth').invalid"
+                                     [searchable]="false"
+                                     [clearable]="false"
+                                     [selectOnTab]="true"
+                                     formControlName="expirationMonth"
+                                     [items]="cardMonths"
+                                     bindLabel="name" bindValue="name"
+                                     placeholder="Month">
+                          </ng-select>
+                        </div>
+                        <div class="p-method__card-year">
+                          <ng-select class="dropdown dropdown--contained"
+                                     [class.dropdown--error]="accountSubmitted && createAccountForm.get('expirationYear').invalid"
+                                     [searchable]="false"
+                                     bindLabel="name" bindValue="name"
+                                     [clearable]="false"
+                                     [selectOnTab]="true"
+                                     formControlName="expirationYear"
+                                     [items]="cardYears"
+                                     placeholder="Year">
+                          </ng-select>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="p-method__create-account-container">
+                    <div class="p-method__card-code">
+                    <label class="p-method__label">CVV</label>
+                    <div class="input-wrap input-wrap--contained input-wrap--small p-method__cvv"
+                         [class.input-wrap--error]="accountSubmitted && createAccountForm.get('cvv').invalid">
+                      <input  maxlength="3"
+                              type="password"
+                              class="input-wrap__input"
+                              data-bluesnap="encryptedCvv"
+                              formControlName="cvv"
+                              autocomplete="off">
+                    </div>
+                  </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+            <div class="p-method__footer-section">
+              <button type="button" class="p-method__btn button button--ghost button--medium ml--auto"
+                      (click)="close()">
+                Cancel
+              </button>
+              <button type="submit" class="p-method__btn button button--contained button--medium" *ngIf='createAccountMode' (click)="onAccountSubmit()">
+                Add account
+              </button>
+              <!-- <ai-loading *ngIf="createAccountMode && loadingAccount"></ai-loading> -->
+            </div>
+          </div>
+        </div>
+      </div>
+</ng-template>
+
+<ng-template #loadingView>
+  <div class="loading">
+    Adding Card, please wait...
+  </div>
+</ng-template>

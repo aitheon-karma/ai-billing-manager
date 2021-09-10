@@ -1,0 +1,44 @@
+.global {
+    width: 600px;
+    max-width: 600px;
+
+    &__form-container {
+        margin-top: 2rem;
+    }
+
+    &__input-section {
+        margin: 1rem 0;
+    }
+
+    &__input-label {
+        margin-bottom: 4px; 
+
+        &--error {
+            color: #e96058;
+        }
+    }
+
+    &__buttons-section {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+    }
+
+    &__hr {
+        border-top: 1px solid #454545;
+    }
+    
+    &__btn {
+        font-size: 12px;
+    }
+}
+
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}
+
+.hide {
+    display: none;
+}

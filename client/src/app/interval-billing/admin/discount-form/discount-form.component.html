@@ -1,0 +1,119 @@
+<div class="discount">
+  <div class="discount__head">
+    <h3 class="discount__title"><span class="discount__back icon icon--arrow-left icon--dynamic" (click)="goBack()"></span>Discount creating</h3>
+    <div class="discount__subtitle">Create new discount proposal step by step</div>
+  </div>
+  <hr class="discount__hr">
+  <form class="discount__form form" [formGroup]="discountForm" (ngSubmit)="onSubmit()">
+    <div class="form__title-step">1/2 : Discount settings</div>
+    <div class="form__section">
+      <label class="form__input-label" [class.hide]="submitted && discountForm.get('name').invalid">Discount name</label>
+      <label class="form__input-label form__input-label--error" *ngIf="submitted && discountForm.get('name').invalid">Discount name is required</label>
+      <div class="input-wrap input-wrap--outlined input-wrap--small" [class.input-wrap--error]="submitted && discountForm.get('name').invalid">
+        <input class="input-wrap__input" type="text" autocomplete="off" placeholder="Enter name" formControlName="name">
+      </div>
+    </div>
+    <div class="form__section">
+      <label class="form__input-label" [class.hide]="submitted && discountForm.get('description').invalid">Discount description</label>
+      <label class="form__input-label form__input-label--error" *ngIf="submitted && discountForm.get('description').invalid">Discount description is required</label>
+      <div class="form__textarea-container input-wrap input-wrap--outlined input-wrap--small" [class.input-wrap--error]="submitted && discountForm.get('description').invalid">
+        <textarea class="form__textarea input-wrap__input" type="text" autocomplete="off" placeholder="Enter description" maxlength="300" formControlName="description"></textarea>
+      </div>
+    </div>
+    <div class="form__section">
+      <label class="form__input-label" [class.hide]="submitted && discountForm.get('appliesTo').invalid">What the discount applies to</label>
+      <label class="form__input-label form__input-label--error" *ngIf="submitted && discountForm.get('appliesTo').invalid">Field is required</label>
+      <div class="dropdown-wrap dropdown-wrap--outlined dropdown-wrap--small" [class.dropdown-wrap--error]="submitted && discountForm.get('appliesTo').invalid">
+        <ngx-select-dropdown [multiple]="false"
+                            [config]="config"
+                            [options]="options"
+                            formControlName="appliesTo">
+        </ngx-select-dropdown>
+      </div>
+    </div>
+    <div class="form__section">
+      <label class="form__input-label" [class.hide]="submitted && discountForm.get('unit').invalid">Discount unit</label>
+      <label class="form__input-label form__input-label--error" *ngIf="submitted && discountForm.get('unit').invalid">Field is required</label>
+      <div class="dropdown-wrap dropdown-wrap--outlined dropdown-wrap--small" [class.dropdown-wrap--error]="submitted && discountForm.get('unit').invalid">
+        <ngx-select-dropdown [multiple]="false"
+                             [config]="config"
+                             [options]="options"
+                             formControlName="unit">
+        </ngx-select-dropdown>
+      </div>
+    </div>
+    <div class="form__section">
+      <label class="form__input-label" [class.hide]="submitted && discountForm.get('units').invalid">Number of discount units</label>
+      <label class="form__input-label form__input-label--error" *ngIf="submitted && discountForm.get('units').invalid">Field is required</label>
+      <div class="input-wrap input-wrap--outlined input-wrap--small" [class.input-wrap--error]="submitted && discountForm.get('units').invalid">
+        <input class="input-wrap__input" type="number" autocomplete="off" placeholder="Enter name" formControlName="units">
+      </div>
+    </div>
+    <div class="form__section">
+      <label class="form__input-label" [class.hide]="submitted && discountForm.get('percentage').invalid">Percentage discount, %</label>
+      <label class="form__input-label form__input-label--error" *ngIf="submitted && discountForm.get('percentage').invalid">Percentage discount field is required</label>
+      <div class="input-wrap input-wrap--outlined input-wrap--small" [class.input-wrap--error]="submitted && discountForm.get('percentage').invalid">
+        <input class="input-wrap__input" type="number" autocomplete="off" placeholder="Enter percentage" formControlName="percentage">
+      </div>
+    </div>
+    <div class="form__title-step mt-4">2/2 : Trigger settings</div>
+    <div class="form__section">
+      <label class="form__input-label" [class.hide]="submitted && discountForm.get('toWhomDiscount').invalid">To whom to offer a discount?</label>
+      <label class="form__input-label form__input-label--error" *ngIf="submitted && discountForm.get('toWhomDiscount').invalid">Field is required</label>
+      <div class="dropdown-wrap dropdown-wrap--outlined dropdown-wrap--small" [class.dropdown-wrap--error]="submitted && discountForm.get('toWhomDiscount').invalid">
+        <ngx-select-dropdown [multiple]="false"
+                              [config]="config"
+                              [options]="options"
+                              formControlName="toWhomDiscount">
+        </ngx-select-dropdown>
+      </div>
+    </div>
+    <div class="form__section">
+      <label class="form__input-label" [class.hide]="submitted && discountForm.get('forWhatSpend').invalid">For what spent units offered a discount?</label>
+      <label class="form__input-label form__input-label--error" *ngIf="submitted && discountForm.get('forWhatSpend').invalid">Field is required</label>
+      <div class="dropdown-wrap dropdown-wrap--outlined dropdown-wrap--small" [class.dropdown-wrap--error]="submitted && discountForm.get('forWhatSpend').invalid">
+        <ngx-select-dropdown [multiple]="false"
+                              [config]="config"
+                              [options]="options"
+                              formControlName="forWhatSpend">
+        </ngx-select-dropdown>
+      </div>
+    </div>
+    <div class="form__section">
+      <label class="form__input-label" [class.hide]="submitted && discountForm.get('howMuchSpend').invalid">How much should user spend to get a discount?</label>
+      <label class="form__input-label form__input-label--error" *ngIf="submitted && discountForm.get('howMuchSpend').invalid">Field is required</label>
+      <div  class="input-wrap input-wrap--outlined input-wrap--small" [class.input-wrap--error]="submitted && discountForm.get('howMuchSpend').invalid">
+        <input class="input-wrap__input" type="number" autocomplete="off" placeholder="Enter name" formControlName="howMuchSpend">
+      </div>
+    </div>
+    <div class="form__section">
+      <label class="form__input-label" [class.hide]="submitted && discountForm.get('whereShouldSpend').invalid">Where should the user spend it?</label>
+      <label class="form__input-label form__input-label--error" *ngIf="submitted && discountForm.get('whereShouldSpend').invalid">Field is required</label>
+      <div class="dropdown-wrap dropdown-wrap--outlined dropdown-wrap--small" [class.dropdown-wrap--error]="submitted && discountForm.get('whereShouldSpend').invalid">
+        <ngx-select-dropdown [multiple]="false"
+                              [config]="config"
+                              [options]="options"
+                              formControlName="whereShouldSpend">
+        </ngx-select-dropdown>
+      </div>
+    </div>
+    <div class="form__section">
+      <label class="form__input-label" [class.hide]="submitted && discountForm.get('howLongSpend').invalid">How long should the user spend it?</label>
+      <label class="form__input-label form__input-label--error" *ngIf="submitted && discountForm.get('howLongSpend').invalid">Field is required</label>
+      <div class="dropdown-wrap dropdown-wrap--outlined dropdown-wrap--small" [class.dropdown-wrap--error]="submitted && discountForm.get('howLongSpend').invalid">
+        <ngx-select-dropdown [multiple]="false"
+                              [config]="config"
+                              [options]="options"
+                              formControlName="howLongSpend">
+        </ngx-select-dropdown>
+      </div>
+    </div>
+    <div class="form__title-end">Please carefully check the entered information before saving changes</div>
+    <hr class="form__hr">
+    <div class="form__buttons-section">
+      <button class="form__btn btn btn-link btn-medium" (click)="goBack()">Cancel</button>
+      <button class="form__btn btn btn-primary btn-medium" type="submit">Save changes</button>
+    </div>
+  </form>
+  
+</div>

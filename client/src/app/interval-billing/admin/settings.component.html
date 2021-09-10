@@ -1,0 +1,58 @@
+<div class="settings">
+    <div class="settings__head">
+        <div class="settings__breadcrumbs">
+            <a class="settings__breadcrumbs-link" routerLink='/'>Billing Manager</a>/
+            <a class="settings__breadcrumbs-link">Settings</a>
+        </div>
+        <div class="settings__chart-toggle"
+             [tooltip]="statisticsOpened ? 'Hide statistics' : 'Show statistics'"
+             [class.settings__chart-toggle--active]="statisticsOpened"
+             (click)="toggleStatistics($event)">
+        </div>
+    </div>
+    <div    class="settings__chart-wrap mt--24 mb--16"
+            *ngIf="statisticsOpened">
+        <ai-usages-by-service></ai-usages-by-service>
+    </div>
+    <div class="row m-0 settings__main-container">
+        <div class="col-3 pl-0 settings-boundaries settings__nav-section">
+            <ul class="list-group settings__nav">
+                <!-- <li (click)="selectSettingsType('GLOBAL')" class="list-group-item settings__nav-item"
+                    [class.settings__nav-item--active]="selectedSettingsType === 'GLOBAL'">
+                    Global settings
+                </li> -->
+                <li (click)="selectSettingsType('SERVICES')" class="list-group-item settings__nav-item"
+                    [class.settings__nav-item--active]="selectedSettingsType === 'SERVICES'">
+                    Users services settings
+                </li>
+                <li (click)="selectSettingsType('ORG_SERVICES')" class="list-group-item settings__nav-item"
+                    [class.settings__nav-item--active]="selectedSettingsType === 'ORG_SERVICES'">
+                    Organizations services settings
+                </li>
+                <!-- <li (click)="selectSettingsType('DISCOUNT')" class="list-group-item settings__nav-item" [class.settings__nav-item--active]="selectedSettingsType === 'DISCOUNT'">
+                  Discount management
+                </li> -->
+            </ul>
+        </div>
+        <div class="col-9 pr-0">
+            <div>
+                <h3 class="settings__title">
+                    {{ title }}
+                </h3>
+                <div class="settings__subtitle mb--16">
+                    {{ selectedSettingsType === 'GLOBAL' ? 'Configure common values of billing' : 'Select a service to see details'}}
+                </div>
+            </div>
+            <!--      <div *ngIf="statisticsOpened">-->
+            <!--        <div class="settings__chart-wrap">-->
+            <!--          <ai-usages-by-date></ai-usages-by-date>-->
+            <!--        </div>-->
+            <!--      </div>-->
+            <!-- <ai-global-settings *ngIf="selectedSettingsType === 'GLOBAL'"></ai-global-settings> -->
+            <ai-services-settings [tab]="'PERSONAL'" *ngIf="selectedSettingsType === 'SERVICES'"></ai-services-settings>
+            <ai-services-settings [tab]="'ORGANIZATION'"
+                                  *ngIf="selectedSettingsType === 'ORG_SERVICES'"></ai-services-settings>
+            <!-- <ai-discount-management *ngIf="selectedSettingsType === 'DISCOUNT'"></ai-discount-management> -->
+        </div>
+    </div>
+</div>

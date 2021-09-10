@@ -1,0 +1,280 @@
+.p-status-body {
+  border: none !important;
+}
+
+.loading {
+  width: 100%;
+  padding: 1.5rem;
+}
+
+.p-status {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+
+  &__processing-container,
+  &__error-container,
+  &__step-tree-container {
+    width: 100%;
+  }
+
+  &__step-tree-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  &__card-code {
+    width: 100%;
+  }
+
+  &__dates-section { width: 100%; }
+
+  &__error-container, &__processing-container {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+  }
+
+  &__label {
+    margin-bottom: 4px;
+    font-size: 12px;
+    letter-spacing: .3px;
+    color: #7e7e7e;
+
+    &.error {
+      color: #e96058;
+    }
+
+    &--balance {
+      margin: 0;
+    }
+  }
+
+  &__title {
+    margin-bottom: 1rem;
+    font-size: 10px;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+
+
+  &__section {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &__section-info {
+    font-size: 14px;
+    color: #fff;
+    letter-spacing: 0.2px;
+  }
+
+  &__hr {
+    border-top: 1px dotted #454545;
+  }
+
+  &__hr-solid {
+    border-top: 1px solid #454545;
+    margin-top: 0;
+    margin-bottom: 24px;
+  }
+
+
+  &__checkbox-label {
+    color: #fff;
+    letter-spacing: 0.2px;
+    margin: 0;
+  }
+
+  &__footer-section {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-around;
+    width: 100%;
+    padding-top: .5rem;
+    padding-bottom: .5rem;
+    border-top: 1px solid #454545;
+  }
+
+  &__dropdown-label {
+    font-size: 12px;
+    color: #7e7e7e;
+    letter-spacing: 0.3px;
+  }
+
+  &__dropdown-add-btn {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+    font-size: 12px;
+    text-decoration: none !important;
+  }
+
+  &__dropdown-add-btn-icon {
+    margin-bottom: 2px;
+    margin-right: 8px;
+  }
+
+  &__succes-title {
+    font-size: 14px;
+    letter-spacing: 0.2px;
+    color: #fff;
+  }
+
+  &__balance-container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    margin: 1rem 0;
+    padding: 0.5rem 1rem;
+    background: #383838;
+  }
+
+  &__balance-icon {
+    display: block;
+    width: 24px;
+    height: 24px;
+    background: url('/assets/images/icons/crypto-gray.svg') center center no-repeat;
+    background-size: contain;
+    margin-right: 1rem;
+  }
+
+  &__balance {
+    font-size: 14px;
+  }
+
+  &__btn {
+    font-size: 12px;
+    margin-left: 0.5rem;
+
+    &.btn-primary {
+      color: #1a1a1a;
+
+      &:hover {
+        color: #1a1a1a;
+      }
+    }
+  }
+
+  &__processing-container {
+    text-align: center;
+
+  }
+
+  &__processing-title {
+    font-size: 18px;
+    margin-bottom: .3rem;
+    color: #fff;
+    letter-spacing: 0;
+  }
+
+  &__processing-description {
+    font-size: 14px;
+    color: #7e7e7e;
+    text-align: center;
+  }
+
+  &__error-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    flex-direction: column;
+    padding: 2rem 0;
+  }
+
+  &__error-icon {
+    text-align: center;
+    width: 64px;
+    height: 64px;
+    &:before {
+      font-size: 36px;
+      margin-top: -.6rem;
+    }
+  }
+
+  &__error-title {
+    font-size: 18px;
+    margin-bottom: .3rem;
+    color: #fff;
+    letter-spacing: 0;
+  }
+
+  &__error-description {
+    font-size: 14px;
+    color: #7e7e7e;
+    text-align: center;
+  }
+
+  &__number-input {
+
+    &:before {
+      top: 36% !important;
+    }
+  }
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.modal-header {
+  border-top-right-radius: 2px !important;
+  border-top-left-radius: 2px !important;
+}
+
+.modal-middle {
+  max-width: 568px;
+}
+
+//
+// Loader
+//
+.card-loader {
+  height: 148px;
+  width: 145px;
+  position: relative;
+  margin: 0 auto;
+
+  &__card {
+    animation: bounce 1.4s linear .5s infinite;
+    position: absolute;
+    left: calc(50% - 38px);
+    top: calc(50% - 22px);
+    height: 44px;
+    width: 76px;
+    background: center / contain no-repeat url("data:image/svg+xml,%3C%3Fxml version='1.0' encoding='UTF-8'%3F%3E%3Csvg width='76px' height='44px' viewBox='0 0 76 44' version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'%3E%3Ctitle%3Ecard-ic%3C/title%3E%3Cg id='Knowledge-Base' stroke='none' stroke-width='1' fill='none' fill-rule='evenodd'%3E%3Cg id='card-ic'%3E%3Crect id='Rectangle' fill='%23DCBC65' x='0' y='0' width='76' height='44' rx='4'%3E%3C/rect%3E%3Crect id='Rectangle' fill='%23343434' x='0' y='9' width='76' height='12'%3E%3C/rect%3E%3Crect id='Rectangle' fill='%231F1F1F' x='27' y='27' width='45' height='1'%3E%3C/rect%3E%3Crect id='Rectangle' fill='%23F3F3F3' x='5' y='24' width='14' height='10' rx='4'%3E%3C/rect%3E%3Crect id='Rectangle' fill='%231F1F1F' x='37' y='30' width='35' height='1'%3E%3C/rect%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+
+  }
+
+  &__arrow {
+    animation: rotate 1.4s linear .5s infinite;
+    position: absolute;
+    left: calc(50% - 57px);
+    top: calc(50% - 57px);
+    height: 114px;
+    width: 114px;;
+    background: center / contain no-repeat url("data:image/svg+xml,%3C%3Fxml version='1.0' encoding='UTF-8'%3F%3E%3Csvg width='114px' height='114px' viewBox='0 0 114 114' version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'%3E%3Ctitle%3Ecircle%3C/title%3E%3Cdefs%3E%3Cpath d='M24,21.5849609 C53.249942,21.8188571 75.5832753,20.0870862 91,16.3896484 C93.974358,15.6762995 94.7256376,13.0088638 97.1230469,12.1640625 C103.808959,9.80807458 109.43461,5.75338708 114,0 L114,114 L0,114 L0,36.9521484 C4.08398437,27.8909505 7.90592448,21.0367839 11.4658203,16.3896484 C13.1630746,14.17403 13.8449577,15.971515 15.8232422,16.3896484 C17.2706131,16.6955671 19.9961991,18.427338 24,21.5849609 Z' id='path-1'%3E%3C/path%3E%3C/defs%3E%3Cg id='Knowledge-Base' stroke='none' stroke-width='1' fill='none' fill-rule='evenodd'%3E%3Cg id='circle' transform='translate(0.000000, -0.000000)'%3E%3Cg id='Mask' transform='translate(57.000000, 57.000000) rotate(-360.000000) translate(-57.000000, -57.000000) '%3E%3Cmask id='mask-2' fill='white'%3E%3Cuse xlink:href='%23path-1'%3E%3C/use%3E%3C/mask%3E%3Cg%3E%3C/g%3E%3Cpath d='M57,0 C88.4802307,0 114,25.5197693 114,57 C114,88.4802307 88.4802307,114 57,114 C25.5197693,114 0,88.4802307 0,57 C0,25.5197693 25.5197693,0 57,0 Z M57,2 C26.6243388,2 2,26.4024979 2,56.5045045 C2,86.6065111 26.6243388,112 57,112 C87.3756612,112 112,86.6065111 112,56.5045045 C112,26.4024979 87.3756612,2 57,2 Z' fill='%23DCBC65' mask='url(%23mask-2)'%3E%3C/path%3E%3C/g%3E%3Cpath d='M18.9823953,25.9826999 L16.9823953,25.9826999 L16.9823953,17.9826999 L8.98239529,17.9826999 L8.98239529,15.9826999 L18.9823953,15.9826999 L18.9823953,25.9826999 Z' id='Combined-Shape' fill='%23DCBC65' transform='translate(13.982395, 20.982700) rotate(-1.000000) translate(-13.982395, -20.982700) '%3E%3C/path%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  }
+}
+
+@keyframes rotate {
+  0% { transform: rotate(0deg) }
+  30% { transform: rotate(100deg) }
+  50% { transform: rotate(330deg) }
+  90% { transform: rotate(360deg) }
+  100% { transform: rotate(360deg) }
+}
+
+@keyframes bounce {
+  0% { transform: scale(1) }
+  20% { transform: scale(.9) }
+  60% { transform: scale(1) }
+  100% { transform: scale(1) }
+}

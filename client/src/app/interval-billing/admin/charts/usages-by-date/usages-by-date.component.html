@@ -1,0 +1,73 @@
+<div class="usage">
+    <div class="usage__head">
+        <h2 class="usage__title">company total usage, acu</h2>
+        <div class="usage__filters">
+            <button type="button"
+                    [class.usage__filter--active]="activeButton === 'today'"
+                    (click)="onChangeDateRange('today', $event)"
+                    class="usage__filter btn btn-link">
+                today
+            </button>
+            <button type="button"
+                    [class.usage__filter--active]="activeButton === 'daily'"
+                    (click)="onChangeDateRange('daily', $event)"
+                    class="usage__filter btn btn-link">
+                daily
+            </button>
+            <button type="button"
+                    [class.usage__filter--active]="activeButton === 'weekly'"
+                    (click)="onChangeDateRange('weekly', $event)"
+                    class="usage__filter btn btn-link">
+                weekly
+            </button>
+            <button type="button"
+                    [class.usage__filter--active]="activeButton === 'monthly'"
+                    (click)="onChangeDateRange('monthly', $event)"
+                    class="usage__filter btn btn-link pr-3">
+                monthly
+            </button>
+            <form [formGroup]="filterForm">
+                <div class="usage__date-range input-wrap input-wrap--date-outlined"
+                     [class.input-wrap--date-filled]="filterForm.valid"
+                     [class.usage__date-range--empty]="!filterForm.valid">
+                    <input type="text"
+                           placeholder="From  -  To"
+                           class="input-wrap__input"
+                           bsDaterangepicker
+                           placement="left"
+                           readonly
+                           formControlName="dateRange"
+                           [bsConfig]="{ showWeekNumbers: false, rangeInputFormat: 'MMM D, YYYY', containerClass: 'datepicker-left' }"
+                           [maxDate]="currentDate">
+                    <div class="input-wrap--date-clear icon icon--close icon--dynamic icon--size-16px"
+                         (click)="clearDate($event)"></div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="usage__graph">
+        <ngx-charts-line-chart  [view]="view"
+                                *ngIf="!loading && options[0].series.length; else chart"
+                                [curve]="curve"
+                                [yAxisTickFormatting]="yAxisTickFormattingFn"
+                                [xAxisTickFormatting]="xAxisTickFormattingFn"
+                                [scheme]="colorScheme"
+                                [results]="options"
+                                [gradient]="gradient"
+                                [xAxis]="showXAxis"
+                                [yAxis]="showYAxis"
+                                [legend]="showLegend"
+                                [rangeFillOpacity]="0"
+                                [showXAxisLabel]="showXAxisLabel"
+                                [showYAxisLabel]="showYAxisLabel"
+                                [autoScale]="true"
+                                [roundDomains]="roundDomains">
+        </ngx-charts-line-chart>
+        <ng-template #chart>
+            <div class="d-flex align-items-center justify-content-center h-100">
+                <ai-loading *ngIf="loading"></ai-loading>
+                <div class="usage__graph-empty-message" *ngIf="!loading">No data to display</div>
+            </div>
+        </ng-template>
+    </div>
+</div>

@@ -1,0 +1,53 @@
+nav.navbar { box-shadow: none !important; }
+
+.ngx-charts {
+  text { fill: #ffffff !important; }
+  .pie-label-line {
+    stroke-dasharray: 2;
+    stroke-dashoffset: 50%;
+    stroke: #fff;
+  }
+  .arc {
+    stroke: #2b2b2b;
+    stroke-width: 3;
+
+    &:hover {
+      fill: #dcbc65;
+    }
+  }
+}
+
+hr {
+  background: rgb(69, 69, 69);
+  border-radius: 0px;
+  height: 1px;
+  width: 100%;
+}
+
+.status-label {
+  margin-left: 16px;
+  border-radius: 18px;
+  border: 1px solid;
+  padding: 2px 12px;
+  font-size: 12px;
+  font-weight: normal;
+  letter-spacing: 0.3px;
+  line-height: 18px;
+  display: flex;
+  align-items: center;
+
+  &--suspended {
+    border-color: rgb(237, 148, 56);
+    color: rgb(237, 148, 56);
+  }
+
+  &--frozen {
+    border-color: #e96058;
+    color: #e96058;
+  }
+
+  &--active {
+    border-color: #67b231;
+    color: #67b231;
+  }
+}

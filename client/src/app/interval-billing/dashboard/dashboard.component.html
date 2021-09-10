@@ -1,0 +1,37 @@
+<div class="row dashboard">
+  <div class="col-12 dashboard__head">
+    <h1 class="dashboard__title">Billing Dashboard</h1>
+    <div class="dashboard__buttons-section">
+      <button routerLink='/interval/statistics/users' class="btn btn-link dashboard__stat-btn dashboard__stat-btn--see">See users stats</button>
+<!--      <button routerLink='/statistics' class="btn btn-link dashboard__stat-btn dashboard__stat-btn&#45;&#45;stat">Statistics</button>-->
+      <!-- <button routerLink='/admin' class="btn btn-link dashboard__stat-btn dashboard__stat-btn--settings">Settings</button> -->
+    </div>
+  </div>
+  <div class="row dashboard__container">
+    <div class="col-4 pr12 my12">
+      <div class="dashboard__balance-container">
+        <ai-account-balance></ai-account-balance>
+      </div>
+    </div>
+    <div class="col-8 pl12 my12">
+      <div class="dashboard__usage-hours-container pt-3">
+        <ai-usage [transactions]="transactions"></ai-usage>
+      </div>
+    </div>
+    <div class="col-12 pr12 my12">
+      <div class="dashboard__most-used-container pt-3">
+        <ai-most-used [transactions]="transactions"></ai-most-used>
+      </div>
+    </div>
+    <!-- <div class="col-3 pl12 my12">
+      <div class="dashboard__discount-container">
+        <ai-discount-bonus></ai-discount-bonus>
+      </div>
+    </div> -->
+    <div class="col-12 my12">
+      <div class="dashboard__statistics-container">
+        <ai-dashboard-statistics [transactions]="transactions"></ai-dashboard-statistics>
+      </div>
+    </div>
+  </div>
+</div>

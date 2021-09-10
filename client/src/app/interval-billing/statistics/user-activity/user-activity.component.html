@@ -1,0 +1,110 @@
+<div class="statistics">
+  <div class="statistics__head">
+    <div class="statistics__breadcrumbs">
+      <a class="statistics__breadcrumbs-link" routerLink='/'>Billing Manager</a>/
+      <a class="statistics__breadcrumbs-link" (click)="redirectBack($event)">User Statistics</a>/
+      <a class="statistics__breadcrumbs-link">User Activity</a>
+    </div>
+    <div class="d-flex flex-row">
+      <h2 class="statistics__head-title">{{ userName }}</h2>
+      <button (click)="redirectToUserProfile($event)"
+              class="btn btn-link statistics__user-profile-link">
+        go to profile
+      </button>
+      <div *ngIf="userActivityCollection.length" class="statistics__total-section ml-auto">
+        <div class="statistics__total"><span class="statistics__total--gray">Total hours:</span> {{ sharedService.formatTime(totalTime)}}</div>
+        <div class="statistics__total"><span class="statistics__total--gray">Total spend:</span> {{ sharedService.roundNumber(totalSpend) }} ACU</div>
+      </div>
+    </div>
+  </div>
+  <div class="statistics__main-container">
+    <form [formGroup]="filterForm">
+      <div class="statistics__filters">
+        <button type="button"
+                [class.statistics__filter--active]="activeButton === 'today'"
+                (click)="onChangeDateRange('today', $event)"
+                class="statistics__filter pl-0 btn btn-link">
+          today
+        </button>
+        <button type="button"
+                [class.statistics__filter--active]="activeButton === 'week'"
+                (click)="onChangeDateRange('week', $event)"
+                class="statistics__filter btn btn-link">
+          week
+        </button>
+        <button type="button"
+                [class.statistics__filter--active]="activeButton === 'month'"
+                (click)="onChangeDateRange('month', $event)"
+                class="statistics__filter btn btn-link pr-3">
+          month
+        </button>
+        <div class="statistics__date-range input-wrap input-wrap--date-contained mt-sm-n1"
+             [class.input-wrap--date-filled]="dateRangeControl.valid"
+             [class.statistics__date-range--empty]="!dateRangeControl.valid">
+          <input (blur)="clearActiveButton($event)"
+                 type="text"
+                 placeholder="From  -  To"
+                 class="input-wrap__input"
+                 bsDaterangepicker
+                 formControlName="dateRange"
+                 [maxDate]="currentDate"
+                 [bsConfig]="{ showWeekNumbers: false, rangeInputFormat: 'MMM D, YYYY'}">
+          <div class="input-wrap--date-clear icon icon--close icon--dynamic icon--size-16px"
+               (click)="clearFormControl('dateRange', $event)"></div>
+        </div>
+        <div  class="search-container statistics__search search-container__outlined ml-auto"
+              [class.search-container--filled]="search.value.length">
+          <input formControlName="search"
+                 type="search"
+                 #search
+                 placeholder="Search"
+                 class="search-container__input">
+          <div class="search-container__button icon icon--search icon--size-16px"></div>
+          <div  class="search-container__button icon icon--close icon--dynamic icon--size-16px"
+                (click)="clearFormControl('search', $event)"></div>
+        </div>
+      </div>
+    </form>
+      <ai-table [loading]="loading"
+                [columns]="listColumns"
+                [paginationConfig]="pagination"
+                [collection]="filteredUsageActivity">
+      </ai-table>
+  </div>
+</div>
+
+<div
+  bsModal
+  #serviceDetailsModal="bs-modal"
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="serviceDetailsModal"
+  aria-hidden="true">
+  <div
+    *ngIf="serviceDetails"
+    class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title pull-left">{{ serviceDetails.label }} detailed statistics</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="closeModal($event)">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body p-0 user-activity__modal">
+        <ai-table [disablePagination]="true"
+                  [columns]="modalColumns"
+                  [hideFooter]="true"
+                  [collection]="formatRecordsValues(serviceDetails.records)">
+        </ai-table>
+      </div>
+      <div class="modal-footer">
+        <button
+          class="btn btn-link list__item-btn"
+          (click)="closeModal($event)">
+          close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

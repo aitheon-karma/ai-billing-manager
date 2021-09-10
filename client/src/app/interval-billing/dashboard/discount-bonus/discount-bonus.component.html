@@ -1,0 +1,31 @@
+<div class="discount">
+  <h2 class="discount__title">Buy ACU tokens in next three hours and get 30% discount!</h2>
+  <div class="discount__progress-container">
+    <div class="discount__progress">
+      <div class="discount__timer">44:44:44</div>
+      <round-progress [max]="100"
+                      [current]="67"
+                      [color]="'#dcbc65'"
+                      [background]="'#383838'"
+                      [radius]="74"
+                      [stroke]="20"
+                      [responsive]="false"
+                      [duration]="800"
+                      [animation]="'easeInOutQuart'"
+                      [animationDelay]="0"></round-progress>
+    </div>
+  </div>
+  <button class="btn btn-link btn-medium discount__buy-btn" (click)="openBuyACUModal(buyACUModal)">Buy ACU</button>
+</div>
+
+<ng-template #buyACUModal>
+  <div class="modal-header">
+    <h4 class="modal-title">Buy ACU tokens</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="closeBuyACUModal()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body p-0">
+    <ai-buy-acu-form></ai-buy-acu-form>
+  </div>
+</ng-template>

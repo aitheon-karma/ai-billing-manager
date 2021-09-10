@@ -1,0 +1,43 @@
+<div class="invoice" [class.invoice--attention]="invoice?.transaction?.status === 'ERROR'">
+  <div class="invoice__info">
+    <span class="invoice__name">
+      {{ invoice?.createdBy.kind === 'WORKER' ? 'Monthly subscription' : 'Additional user fee' }}
+    </span>
+    <span class="invoice__date"
+          [ngStyle]="{'color': invoice?.transaction?.status === 'SUCCESS' ? 'rgb(255, 255, 255)' : '#e96058'}">
+      {{ invoice?.transaction?.status === 'SUCCESS' ? (invoice?.transaction?.createdAt | date: 'MM/dd HH:mm') : 'Unsuccessful' }}
+    </span>
+  </div>
+  <!-- Services -->
+  <div class="invoice__services">
+
+
+    <ng-container *ngFor="let service of servicesList; let i = index">
+      <ng-container *ngIf="i < 10">
+        <div class="service-icon {{ service | serviceIcon }}"
+             tooltip="{{ service.split('_').join(' ') | titlecase }}"
+             container="body"
+             placement="top">
+        </div>
+      </ng-container>
+    </ng-container>
+    <ng-container *ngIf="invoice?.charges?.length > 10">
+              <span class="invoice__services__more" placement="right" container="body"
+                    tooltip="{{ getServicesTooltipInfo(this.servicesList) | titlecase }}">
+                +{{ (invoice?.charges?.length - 10) }}
+              </span>
+    </ng-container>
+  </div>
+  <div class="invoice__card-info">
+    <div class="invoice__logo mr--4"
+         [ngClass]="getCardTypeLogo(invoice?.transaction?.data?.creditCard.cardType)"></div>
+    <b>&middot;&middot;&middot;&middot;</b> <span class="pl--4">{{ invoice?.transaction?.data?.creditCard.cardLastFourDigits }}</span>
+  </div>
+  <div class="invoice__bill">
+    {{ invoice?.transaction?.data?.usdAmount | currency: 'USD'}}
+  </div>
+  <button class="button button--small button--ghost ml--24" (click)="invoiceAction(invoice)">
+    <span *ngIf="invoice?.transaction?.status !== 'SUCCESS'" class="icon icon--attention icon--size-16px button__icon mr--4"></span>
+    {{ invoice?.transaction?.status === 'SUCCESS' ? 'Invoice' : 'Retry' }}
+  </button>
+</div>

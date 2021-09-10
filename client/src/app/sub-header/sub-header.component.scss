@@ -1,0 +1,45 @@
+.sub-header {
+  height: 48px;
+  background-color: #2b2b2b;
+  position: fixed;
+  top: 65px;
+  right: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  border-top: solid 1px #454545;
+
+  ul {
+    padding: 0;
+    margin: 0;
+  }
+
+  &__nav {
+    display: flex;
+    align-items: center;
+    height: 100%;
+
+    &__item {
+      list-style-type: none;
+
+      &:not(:first-child) {
+        margin-left: 1.875rem;
+      }
+    }
+
+    &__link {
+      color: #8c8c8c;
+
+
+      &:hover {
+        color: #dcbc65;
+        text-decoration: none;
+      }
+
+      &--active {
+        color: #dcbc65;
+        text-decoration: none;
+      }
+    }
+  }
+}

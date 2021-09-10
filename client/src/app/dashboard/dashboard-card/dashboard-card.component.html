@@ -1,0 +1,25 @@
+<div class="card">
+  <div class="d-flex p--16">
+    <span class="{{ 'service-icon ' + service.service | serviceIcon }}"></span>
+    <div class="d-flex flex-column flex-grow-1">
+      <div class="d-flex align-items-center justify-content-between mb--16">
+        <span class="card__title">
+          {{ service.name }}
+        </span>
+        <button type="button" class="button button--small button--ghost ml--16" (click)="manageService(service.service)">
+          Manage
+        </button>
+      </div>
+      <div class="d-flex flex-wrap justify-content-start align-items-start">
+        <div class="card__detail" *ngFor="let allocation of allocations">
+          <span class="card__detail__icon" [ngClass]="getAllocationIcon(allocation.itemType)"></span>
+          <span> {{ allocation.quantity  }} {{ allocation.name + 's' }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card__date p--16">
+    <span class="pr--4">Next payment:</span>
+    {{ nextPaymentDate | date: 'MM.dd.yy' }} / {{ service.totalPrice | currency: 'USD' }}
+  </div>
+</div>

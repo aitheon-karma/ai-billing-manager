@@ -1,0 +1,85 @@
+<div class="global">
+  <hr class="global__hr">
+  <div class="global__form-container">
+    <form class="global__form"
+          [formGroup]="globalSettingsForm"
+          (ngSubmit)="onSubmit()">
+      <div class="global__input-section">
+        <label  class="global__input-label"
+                [class.hide]="submitted && globalSettingsForm.get('period').invalid">Trial period</label>
+        <label  class="global__input-label global__input-label--error"
+                *ngIf="submitted && globalSettingsForm.get('period').invalid">Trial period is required</label>
+        <div  class="dropdown-wrap dropdown-wrap--outlined dropdown-wrap--small"
+              [class.dropdown-wrap--error]="submitted && globalSettingsForm.get('period').invalid">
+          <ngx-select-dropdown  formControlName="period"
+                                [multiple]="false"
+                                [config]="config"
+                                [options]="options">
+          </ngx-select-dropdown>
+        </div>
+      </div>
+      <div class="global__input-section">
+        <label  class="global__input-label"
+                [class.hide]="submitted && globalSettingsForm.get('price').invalid">
+          Organization price
+        </label>
+        <label  class="global__input-label global__input-label--error"
+                *ngIf="submitted && globalSettingsForm.get('price').invalid">
+          Organization price is required
+        </label>
+        <div  class="input-wrap input-wrap--outlined input-wrap--small"
+              [class.input-wrap--error]="submitted && globalSettingsForm.get('price').invalid">
+          <input  class="input-wrap__input"
+                  type="number"
+                  autocomplete="off"
+                  placeholder="For each organization created in the system"
+                  formControlName="price">
+        </div>
+      </div>
+      <div class="global__input-section">
+        <label  class="global__input-label"
+                [class.hide]="submitted && globalSettingsForm.get('entries').invalid">
+          Price per hundred database entries
+        </label>
+        <label  class="global__input-label global__input-label--error"
+                *ngIf="submitted && globalSettingsForm.get('entries').invalid">
+          Price for database entries is required
+        </label>
+        <div  class="input-wrap input-wrap--outlined input-wrap--small"
+              [class.input-wrap--error]="submitted && globalSettingsForm.get('entries').invalid">
+          <input  class="input-wrap__input"
+                  type="number"
+                  autocomplete="off" 
+                  placeholder="For each organization created in the system" 
+                  formControlName="entries">
+        </div>
+      </div>
+      <div class="global__input-section">
+        <label  class="global__input-label"
+                [class.hide]="submitted && globalSettingsForm.get('storage').invalid">
+          Price per one gigabyte of drive storage
+        </label>
+        <label  class="global__input-label global__input-label--error"
+                *ngIf="submitted && globalSettingsForm.get('storage').invalid">
+          Price for drive storage is required
+        </label>
+        <div  class="input-wrap input-wrap--outlined input-wrap--small"
+              [class.input-wrap--error]="submitted && globalSettingsForm.get('storage').invalid">
+          <input  class="input-wrap__input" 
+                  type="number" 
+                  autocomplete="off" 
+                  placeholder="For example: 5 ACU" 
+                  formControlName="storage">
+        </div>
+      </div>
+      <hr class="global__hr mt-4">
+      <div class="global__buttons-section">
+        <button class="global__btn btn btn-link btn-medium">Cancel</button>
+        <button class="global__btn btn btn-primary btn-medium" 
+                type="submit">
+          Save changes
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

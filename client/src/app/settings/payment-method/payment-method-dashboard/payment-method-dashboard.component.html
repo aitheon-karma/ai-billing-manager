@@ -1,0 +1,98 @@
+<div class="d-flex align-items-center justify-content-start mb--24">
+  <h1 class="title">
+    Payment method
+  </h1>
+  <!-- Payment Status -->
+  <span class="status-label" *ngIf="status" [ngClass]="status.className">
+    {{ status.name | titlecase }} subscription
+  </span>
+  <!-- /Payment Status -->
+</div>
+<div class="payment-list">
+  <ai-payment-method-card [type]="'add'" (click)="addPaymentMethod()"></ai-payment-method-card>
+  <ai-payment-method-card [type]="'card'"
+                          (setMainCardEvent)="openSetMainCardModal($event)"
+                          (deleteCardEvent)="onDeleteCard($event)"
+                          *ngFor="let card of userCards"
+                          [card]="card">
+  </ai-payment-method-card>
+</div>
+
+<ng-template #setMainCard>
+  <div class="modal-header modal-header--confirmation">
+    <h3 class="modal-title">Change main card</h3>
+  </div>
+  <div class="modal-body">
+    <span class="text text--gray">Are you sure that you want to change the main card.</span>
+    <!--  The monthly fee from main card is $1922 for 12 services. -->
+  </div>
+  <div class="modal-footer pt--8 pb--8 d-flex justify-content-end">
+    <button class="button button--medium button--ghost mr--16"
+            (click)="modalRef.hide()">
+      Cancel
+    </button>
+    <button class="button button--medium button--contained my-0"
+            value="1"
+            type="submit"
+            (click)="changeMainCard()">
+      Change
+    </button>
+  </div>
+</ng-template>
+
+<ng-template #deleteCardModal>
+  <div class="modal-header" [class.modal-header--confirmation]="deleteModalMode !== 'main'">
+    <h3 class="modal-title">Delete card</h3>
+    <button class="icon icon--close icon--dynamic"
+            *ngIf="deleteModalMode === 'main'"
+            (click)="closeDeleteCardModal()">
+    </button>
+  </div>
+  <div class="modal-body">
+    <span class="text" [ngClass]="deleteModalMode === 'main' ? 'text--white' : 'text--gray'">
+      {{ deleteModalMode === 'main' ? 'This card is the main payment method. To delete a card, select another card to pay for services' : 'Are you sure you want to delete the card?' }}
+    </span>
+
+    <div class="form-group mt--24" [hidden]="deleteModalMode !== 'main'">
+      <label>
+        New main card
+      </label>
+      <ng-select class="dropdown dropdown--contained"
+                 [items]="nonDefaultCards"
+                 [searchable]="false"
+                 [clearable]="false"
+                 [multiple]="false"
+                 bindValue="_id"
+                 [(ngModel)]="newMainCardId"
+                 bindLabel="lastFourDigits">
+        <ng-template ng-multi-label-tmp let-items="items" let-clear="clear">
+          <div class="ng-value" *ngFor="let item of items">
+            <div>
+              {{ item.type | titlecase }} <b>&middot;&middot;&middot;&middot;</b> {{ item.lastFourDigits }}
+            </div>
+          </div>
+        </ng-template>
+        <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
+          <div>
+            {{ item.type | titlecase }} <b>&middot;&middot;&middot;&middot;</b> {{ item.lastFourDigits }}
+          </div>
+        </ng-template>
+      </ng-select>
+    </div>
+
+  </div>
+  <div class="modal-footer pt--8 pb--8 d-flex justify-content-end">
+    <button class="button button--medium button--ghost mr--16"
+            (click)="closeDeleteCardModal()">
+      Cancel
+    </button>
+    <button class="button button--medium button--contained my-0"
+            value="1"
+            type="submit"
+            [disabled]="deleteModalMode === 'main' && !newMainCardId"
+            (click)="deleteModalMode === 'main' ? deleteMainCard() : deleteCard(selectedCard)">
+      Delete
+    </button>
+  </div>
+</ng-template>
+<ai-payment-method-modal (accountCreated)="accountCreated($event)"></ai-payment-method-modal>

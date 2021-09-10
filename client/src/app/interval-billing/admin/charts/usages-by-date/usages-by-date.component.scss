@@ -1,0 +1,79 @@
+.usage {
+
+    &__head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 0.5rem;
+    }
+
+    &__title {
+        margin: 0;
+        font-size: 10px;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        color: #fff;
+    }
+
+    &__filters {
+        display: flex;
+        align-items: center;
+    }
+
+    &__filter {
+        font-size: 12px;
+        color: #7e7e7e;
+
+        &:hover {
+            text-decoration: none;
+        }
+
+        &--active {
+            color: #dcbc65 !important;
+        }
+
+        &:last-child {
+            padding-right: 1.5rem;
+            border-right: 1px solid #454545;
+        }
+    }
+
+    &__date-range {
+        border: none !important;
+        border-left: 1px solid #454545 !important;
+        background: #2b2b2b;
+        width: 240px;
+        height: 30px;
+
+        &--empty {
+            width: 130px;
+        }
+
+        &:hover {
+            background: rgba(#7E7E7E, 0.15);
+        }
+
+        &:active,
+        &:focus,
+        &:focus-within {
+            border: none !important;
+            border-left: 1px solid #454545 !important;
+        }
+
+        input {
+            cursor: pointer;
+        }
+    }
+
+    &__graph {
+        width: 100%;
+        height: 220px;
+        margin-left: -1rem;
+        background-size: contain;
+    }
+
+    &__graph-empty-message {
+        color: #7e7e7e;
+        font-size: 14px;
+    }
+}

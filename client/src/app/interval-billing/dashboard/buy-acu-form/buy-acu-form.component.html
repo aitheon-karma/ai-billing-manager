@@ -1,0 +1,319 @@
+<div  bsModal
+      #buyAcuModal="bs-modal"
+      class="modal fade"
+      [config]="{backdrop: 'static'}"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="myLargeModalLabel"
+      aria-hidden="true">
+  <div class="modal-dialog modal-sm" [class.modal-middle]="createAccountMode">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h6 class="modal-title pull-left" *ngIf="!createAccountMode">Buy ACU</h6>
+        <h6 class="modal-title pull-left" *ngIf="createAccountMode">New Payment Account</h6>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="close()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body p-0 buy-acu-body">
+        <div class="buy-acu__container" *ngIf="!loading; else loadingView">
+          <div class="buy-acu" [formGroup]="buyAcuForm" id="account-form">
+            <div  class="buy-acu__step-one-container"
+                  *ngIf='stepOne && !createAccountMode'>
+              <label  class="buy-acu__label"
+                      [class.error]="(price.dirty && !price.value) || price.invalid">
+                {{ getPriceLabel() }}
+              </label>
+              <div class="input-wrap
+                          input-wrap--contained
+                          input-wrap--small
+                          buy-acu__input-wrap
+                          buy-acu__input-wrap--dollar"
+                          [class.input-wrap--error]="(price.dirty && !price.value) || price.invalid">
+                <input  class="input-wrap__input buy-acu__input"
+                        type="number"
+                        autocomplete="off"
+                        placeholder="0"
+                        formControlName='price'>
+              </div>
+              <label class="buy-acu__label mt-3">Tokens:</label>
+              <div class="buy-acu__money">ACU
+                <input  class="buy-acu__money-input"
+                        readonly
+                        [value]="acu.value | number: '0.1-2'">
+              </div>
+            </div>
+            <div  class="buy-acu__step-two-container"
+                  *ngIf="stepTwo && !createAccountMode">
+              <div class="buy-acu__section">
+                <label class="buy-acu__label">You pay:</label>
+                <span class="buy-acu__section-info">{{ price.value | currency:'USD' }}</span>
+              </div>
+              <div class="buy-acu__section">
+                <label class="buy-acu__label">You receive:</label>
+                <span class="buy-acu__section-info">{{ acu.value | number:'0.2' }} ACU</span>
+              </div>
+              <hr class="buy-acu__hr">
+              <div class="buy-acu__dropdown-section">
+                <label class="buy-acu__dropdown-label">Choose card or ETH account for payment</label>
+                <div class="buy-acu__dropdown">
+                  <ng-select  class="dropdown dropdown--contained"
+                              [searchable]="false"
+                              [virtualScroll]="true"
+                              [clearable]="false"
+                              bindLabel="bankName"
+                              id="buy-account"
+                              [items]="accounts"
+                              placeholder="Select account"
+                              formControlName="account">
+                    <ng-template  ng-option-tmp
+                                  let-item="item">
+                      <div class="item item--text">{{ item.bankName }}</div>
+                    </ng-template>
+                    <ng-template ng-footer-tmp>
+                      <button class="btn btn-link btn-medium buy-acu__dropdown-add-btn"
+                              (click)="onCreateAccountMode()">
+                        <span class="buy-acu__dropdown-add-btn-icon icon icon--plus icon--active icon--size-16px"></span>
+                        Create bank
+                      </button>
+                    </ng-template>
+                  </ng-select>
+                </div>
+              </div>
+              <div class="buy-acu__checkbox checkbox">
+                <input  type="checkbox"
+                        id="confirm"
+                        formControlName="checkbox"
+                        class="checkbox__input">
+                <label  class="buy-acu__checkbox-label"
+                        for="confirm">I confirm the purchase of
+                  {{ acu.value | number:'0.2'}} ACU tokens for {{ price.value  | currency:'USD'  }}</label>
+              </div>
+            </div>
+            <div  class="buy-acu__step-tree-container"
+                  *ngIf="success && !createAccountMode">
+              <div class="buy-acu__succes-title">Thank you for buying {{ acu.value | number:'0.2' }} ACU tokens.
+              </div>
+              <div class="buy-acu__balance-container">
+                <div class="buy-acu__balance-icon"></div>
+                <div class="buy-acu__balance-info">
+                  <label class="buy-acu__label buy-acu__label--balance">ACU balance:</label>
+                  <div class="buy-acu__balance">{{ acuBalance | number: '0.2' }}</div>
+                </div>
+              </div>
+              <!-- <label class="buy-acu__label">
+                On average, you spend 500 tokens per day.
+                {{ 1000 + acu.value | number:'0.2'  }} tokens should be enough for 10 days.
+              </label> -->
+            </div>
+            <div class="buy-acu__error-container" *ngIf="failed">
+                <span class="buy-acu__error-icon icon icon--attention icon--red"></span>
+                <div class="buy-acu__error-title">Purchase Failed</div>
+                <div class="buy-acu__error-description">Try to check your card for the correct information or try later</div>
+            </div>
+            <div  class="buy-acu__create-account"
+                  *ngIf="createAccountMode">
+              <form [formGroup]="createAccountForm"
+                    (ngSubmit)="onAccountSubmit()">
+                <!-- <div class="buy-acu__create-account-section">
+                  <label  class="buy-acu__label"
+                          for="bankName"
+                          [hidden]="accountSubmitted && createAccountForm.get('bankName').invalid">Type bank name</label>
+                  <label  class="buy-acu__label buy-acu__label--error"
+                          *ngIf="accountSubmitted && createAccountForm.get('bankName').invalid">Bank name is required</label>
+                  <div  class="input-wrap input-wrap--contained input-wrap--small"
+                        [class.input-wrap--error]="accountSubmitted && createAccountForm.get('bankName').invalid">
+                    <input  type="text"
+                            class="input-wrap__input"
+                            formControlName="bankName">
+                  </div>
+                </div>
+                <div class="buy-acu__create-account-section">
+                  <label  class="buy-acu__label"
+                          for="lastDigits"
+                          [hidden]="accountSubmitted && createAccountForm.get('lastDigits').invalid">Last 4 Digits of bank account</label>
+                  <label  class="buy-acu__label buy-acu__label--error"
+                          *ngIf="accountSubmitted && createAccountForm.get('lastDigits').invalid">Bank digits field is required</label>
+                  <div  class="input-wrap input-wrap--contained input-wrap--small"
+                        [class.input-wrap--error]="accountSubmitted && createAccountForm.get('lastDigits').invalid">
+                    <input  type="text"
+                            pattern="\d*"
+                            maxlength="4"
+                            digitOnly
+                            class="input-wrap__input"
+                            formControlName="lastDigits">
+                  </div>
+                </div>
+                <div class="buy-acu__create-account-section">
+                  <label  class="buy-acu__label"
+                          for="type"
+                          [hidden]="accountSubmitted && createAccountForm.get('type').invalid">This setting active only if type «receive» below is enabled</label>
+                  <label  class="buy-acu__label buy-acu__label--error"
+                          *ngIf="accountSubmitted && createAccountForm.get('type').invalid">Type is required</label>
+                  <ng-select  class="dropdown dropdown--contained"
+                              [class.dropdown--error]="accountSubmitted && createAccountForm.get('type').invalid"
+                              placeholder="Select type"
+                              [searchable]="false"
+                              [clearable]="false"
+                              [selectOnTab]="true"
+                              formControlName="type"
+                              bindLabel="displayText" bindValue="value"
+                              [items]="accountTypes">
+                  </ng-select>
+                </div> -->
+                <!-- <hr class="buy-acu__hr-solid"> -->
+                <div  class="buy-acu__title">Card Details</div>
+                <div class="buy-acu__create-account-section">
+                  <label  class="buy-acu__label"
+                          for="cardHolderFirstName"
+                          [hidden]="accountSubmitted && createAccountForm.get('cardHolderFirstName').invalid">First name</label>
+                  <label  class="buy-acu__label buy-acu__label--error"
+                          *ngIf="accountSubmitted && createAccountForm.get('cardHolderFirstName').invalid">First name is required</label>
+                  <div  class="input-wrap input-wrap--contained input-wrap--small"
+                        [class.input-wrap--error]="accountSubmitted && createAccountForm.get('cardHolderFirstName').invalid">
+                    <input  type="text"
+                            class="input-wrap__input"
+                            formControlName="cardHolderFirstName">
+                  </div>
+                </div>
+                <div class="buy-acu__create-account-section">
+                    <label  class="buy-acu__label"
+                            for="cardHolderLastName"
+                            [hidden]="accountSubmitted && createAccountForm.get('cardHolderLastName').invalid">Last name</label>
+                    <label  class="buy-acu__label buy-acu__label--error"
+                            *ngIf="accountSubmitted && createAccountForm.get('cardHolderLastName').invalid">Last name is required</label>
+                    <div  class="input-wrap input-wrap--contained input-wrap--small"
+                          [class.input-wrap--error]="accountSubmitted && createAccountForm.get('cardHolderLastName').invalid">
+                    <input  type="text"
+                            class="input-wrap__input"
+                            formControlName="cardHolderLastName">
+                  </div>
+                </div>
+                <hr class="buy-acu__hr-solid">
+                <div class="buy-acu__create-account-section">
+                  <div class="buy-acu__create-account-container">
+                    <div class="buy-acu__card-number">
+                      <label  class="buy-acu__label"
+                              for="lastName"
+                              [hidden]="accountSubmitted && createAccountForm.get('creditCard').invalid">Card number</label>
+                      <label  class="buy-acu__label buy-acu__label--error" *ngIf="accountSubmitted && createAccountForm.get('creditCard').hasError('required')">Card number is required</label>
+                      <label  class="buy-acu__label buy-acu__label--error" *ngIf="accountSubmitted && createAccountForm.get('creditCard').hasError('Mask error')">Card number is invalid</label>
+                      <div  class="buy-acu__number-input input-wrap input-wrap--card input-wrap--contained input-wrap--small"
+                            [ngClass]="{'input-wrap--invalid': (accountSubmitted && createAccountForm.get('creditCard').invalid)}">
+                        <input  type="text"
+                                class="input-wrap__input"
+                                id="creditCard"
+                                formControlName="creditCard"
+                                [showMaskTyped]="true"
+                                placeHolderCharacter="*"
+                                data-bluesnap="encryptedCreditCard"
+                                mask="0000 0000 0000 0000">
+                      </div>
+                    </div>
+                    <div class="buy-acu__dates-section">
+                      <label  class="buy-acu__label"
+                              for="expiryDate">Expiry Date</label>
+                      <div class="buy-acu__dates">
+                        <div class="buy-acu__card-month">
+                          <ng-select  class="dropdown dropdown--contained"
+                                      [class.dropdown--error]="accountSubmitted && createAccountForm.get('expirationMonth').invalid"
+                                      [searchable]="false"
+                                      [clearable]="false"
+                                      [selectOnTab]="true"
+                                      formControlName="expirationMonth"
+                                      [items]="cardMonths"
+                                      bindLabel="name" bindValue="name"
+                                      placeholder="Month">
+                          </ng-select>
+                        </div>
+                        <div class="buy-acu__card-year">
+                          <ng-select  class="dropdown dropdown--contained"
+                                      [class.dropdown--error]="accountSubmitted && createAccountForm.get('expirationYear').invalid"
+                                      [searchable]="false"
+                                      bindLabel="name" bindValue="name"
+                                      [clearable]="false"
+                                      [selectOnTab]="true"
+                                      formControlName="expirationYear"
+                                      [items]="cardYears"
+                                      placeholder="Year">
+                          </ng-select>
+                        </div>
+                    </div>
+                  </div>
+                  <div class="buy-acu__card-code">
+                    <label class="buy-acu__label">CVV</label>
+                    <div  class="input-wrap input-wrap--contained input-wrap--small buy-acu__cvv"
+                          [class.input-wrap--error]="accountSubmitted && createAccountForm.get('cvv').invalid">
+                      <input  maxlength="3"
+                              type="password"
+                              class="input-wrap__input"
+                              data-bluesnap="encryptedCvv"
+                              formControlName="cvv"
+                              autocomplete="off">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- <hr class="buy-acu__hr-solid">
+              <div  class="buy-acu__title mb-2">Reminder</div>
+              <label class="mb-4">Optionally you can add a date which notifies you before 2 days about the next payments</label>
+              <div class="buy-acu__create-account-section buy-acu__create-account-section--small">
+                <label  class="buy-acu__label"
+                        for="type">On which day you pay every month?</label>
+                <ng-select  class="dropdown dropdown--contained"
+                            placeholder="Select day"
+                            [searchable]="false"
+                            [clearable]="false"
+                            [selectOnTab]="true"
+                            formControlName="dueDate"
+                            bindLabel="name"
+                            bindValuef="name"
+                            [items]="dueDateOptions">
+                </ng-select>
+              </div> -->
+              </form>
+            </div>
+            <div class="buy-acu__footer-section">
+              <button class="buy-acu__btn btn btn-link btn-medium ml-auto"
+                      *ngIf='stepOne || stepTwo || failed'
+                      (click)="close()">Cancel</button>
+              <button class="buy-acu__btn btn btn-primary btn-medium"
+                      *ngIf='stepOne'
+                      (click)="goToStepTwo()"
+                      [disabled]="!buyAcuForm.get('acu').value || acu.hasError('required') || price.hasError('min')">
+                Checkout
+              </button>
+              <button class="buy-acu__btn btn btn-primary btn-medium"
+                      *ngIf="stepTwo && !createAccountMode"
+                      (click)="purchaseACU()"
+                      [disabled]="!buyAcuForm.get('checkbox').value || !buyAcuForm.get('account').value">
+                Buy ACU
+              </button>
+              <button class="buy-acu__btn btn btn-link btn-medium ml-auto"
+                      *ngIf='success'
+                      (click)="close()">
+                Close</button>
+              <button class="buy-acu__btn btn btn-primary btn-medium"
+                      *ngIf='failed'
+                      (click)="tryPaymentAgain()">
+                Try again
+              </button>
+              <button class="buy-acu__btn btn btn-primary btn-medium"
+                      *ngIf='createAccountMode && !loadingAccount'
+                      (click)="onAccountSubmit()">
+                Add account
+              </button>
+              <ai-loading *ngIf="createAccountMode && loadingAccount"></ai-loading>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #loadingView>
+  <div class="loading">
+      <ai-loading></ai-loading>
+  </div>
+</ng-template>

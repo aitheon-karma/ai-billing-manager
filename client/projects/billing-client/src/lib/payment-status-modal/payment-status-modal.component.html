@@ -1,0 +1,55 @@
+<ng-template #paymentStatusModal>
+  <div class="modal-body pb-0 pt-4">
+    <div class="p-status__container">
+      <div class="p-status">
+        <div class="p-status__step-tree-container" *ngIf="status.success">
+          <span class="p-status__error-icon icon icon--done-success icon--green"></span>
+          <div class="p-status__error-title">Subscription successful!</div>
+          <div class="p-status__error-description">
+            Now you are free to start using {{ status.serviceName }}.
+          </div>
+
+        </div>
+        <div class="p-status__error-container" *ngIf="status.error">
+          <span class="p-status__error-icon icon icon--attention icon--red"></span>
+          <div class="p-status__error-title"> {{ status.updateOnly ? 'Error updating subscription': 'Purchase Failed' }}</div>
+          <div class="p-status__error-description" *ngIf="status.updateOnly">Please check your credit/debit card information and try again.</div>
+          <div class="p-status__error-description" *ngIf="!status.updateOnly" >Something went wrong, please contact Aitheon support</div>
+        </div>
+
+        <div class="p-status__processing-container" *ngIf="status.processing">
+          <!-- <span class="p-status__error-icon icon icon--attention icon--red"></span> -->
+          <div class="card-loader">
+            <div class="card-loader__card"></div>
+            <div class="card-loader__arrow"></div>
+          </div>
+          <div class="p-status__processing-title">Please wait…</div>
+          <div class="p-status__processing-description">Please wait while we {{ status.updateOnly ? 'update': 'charge and update' }} your subscription</div>
+        </div>
+
+        <div class="p-status__footer-section mt-2" *ngIf="!status.processing">
+          <button class="p-status__btn button button--ghost button--medium ml--auto" (click)="close()">
+            Close
+          </button>
+          <button *ngIf="status.error" (click)="onRetry()"
+            class="p-status__btn button button--contained button--medium">
+            Try again
+          </button>
+          <a *ngIf="status.success && status.serviceUrl" href="{{status.serviceUrl}}">
+            <button class="p-status__btn button button--contained button--medium">
+              Go to Service
+            </button>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</ng-template>
+
+
+<ng-template #processingPayment>
+  <div class="loading">
+    Processing...
+  </div>
+</ng-template>

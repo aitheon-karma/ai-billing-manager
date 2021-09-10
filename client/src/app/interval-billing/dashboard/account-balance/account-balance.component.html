@@ -1,0 +1,29 @@
+<div class="balance"  *ngIf="!loading; else loadingView">
+  <h2 class="balance__title">Account balance</h2>
+  <div class="balance__number">{{ totalBalance | number: '0.2'}} ACU</div>
+  <!-- <hr class="balance__hr">
+  <div class="balance__section">
+    <div class="balance__subtitle">Average day consumption</div>
+    <div class="balance__average">14,80 ACU</div>
+  </div> -->
+  <hr *ngIf="trialBalance" class="balance__hr">
+  <div *ngIf="trialBalance" class="balance__section">
+    <div class="balance__subtitle">{{ orgMode ? 'Organization': 'Personal' }} balance</div>
+    <div class="balance__average">{{ balance.total | number: '0.2' }} ACU</div>
+  </div>
+  <div *ngIf="trialBalance" class="balance__section">
+    <div class="balance__subtitle">{{ orgMode ? 'Organization': 'Personal'}} trial balance</div>
+    <div class="balance__green">{{ trialBalance || 0 | number: '0.2' }} ACU</div>
+  </div>
+
+  <button [disabled]="!fiatAccountEnabled" class="button button--contained button--medium balance__buy-btn" (click)="openBuyACUModal()">Buy ACU</button>
+
+</div>
+
+<ai-buy-acu-form [acuBalance]="balance?.total" (purchaseSuccess)="loadBalances()" #buyACUModal></ai-buy-acu-form>
+
+<ng-template #loadingView>
+  <div class="loading text-center d-flex align-items-center h-100 justify-content-center">
+    <ai-loading></ai-loading>
+  </div>
+</ng-template>

@@ -1,0 +1,39 @@
+{
+  "name": "ai-billing-manager",
+  "version": "0.0.0",
+  "scripts": {
+    "ng": "ng",
+    "start": "ng serve",
+    "build": "ng build --aot",
+    "build:prod": "npm run build:client-lib && $(npm bin)/ng build --aot --prod --base-href /billing-manager/ --deploy-url /billing-manager/ && npm run docs",
+    "build:client-lib": "ng build @aitheon/billing-client --prod",
+    "watch": "ng build --watch=true --aot",
+    "test": "ng test",
+    "lint": "ng lint ai-billing-manager --fix",
+    "e2e": "ng e2e",
+    "lib:watch": "$(npm bin)/ng build @aitheon/billing-manager --watch",
+    "lib:version": "cd projects/aitheon/billing-manager && npm version minor",
+    "lib:build": "$(npm bin)/ng build @aitheon/billing-manager",
+    "lib:publish": "npm run lib:build && npm publish dist/aitheon/billing-manager",
+    "docs": "npm run typedoc -- --options typedoc.json --exclude '**/*.spec.ts' ./projects/",
+    "typedoc": "typedoc"
+  },
+  "private": true,
+  "dependencies": {
+    "@aitheon/core-client": "9.1.63",
+    "@aitheon/treasury": "0.75.0",
+    "@swimlane/ngx-charts": "14.0.0",
+    "angular-svg-round-progressbar": "^3.0.1",
+    "d3": "^5.0.2",
+    "d3-time-format": "^2.1.3",
+    "ngx-select-dropdown": "^1.4.3",
+    "tslib": "^1.10.0"
+  },
+  "devDependencies": {
+    "@angular-devkit/build-angular": "~0.901.11",
+    "@angular-devkit/build-ng-packagr": "~0.901.11",
+    "@angular/compiler-cli": "~9.1.12",
+    "ng-packagr": "^9.0.0",
+    "typescript": "~3.8.3"
+  }
+}

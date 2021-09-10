@@ -1,0 +1,33 @@
+<div class="service-feature">
+  <div class="d-flex flex-column align-items-start">
+    <span class="service-feature__title">
+      {{ allocation.name || (allocation.itemType | titlecase) }}
+    </span>
+    <span class="subtitle-uppercase">
+      {{ pricePerQuantity | currency: 'USD' }} per {{ allocation.name }}
+    </span>
+  </div>
+  <div class="d-flex justify-content-center align-items-center">
+    <button type="button"
+            class="service-feature__button position-relative"
+            [class.service-feature__button--red]="previousButtonDisabled || initQuantity > totalQuantity"
+            [class.service-feature__button--disabled]="previousButtonDisabled || totalQuantity === 0"
+            (click)="totalQuantity = totalQuantity - 1">
+      <span class="icon icon--minus icon--size-16px"
+            [class.icon--red]="previousButtonDisabled || initQuantity > totalQuantity"></span>
+      <div class="no-seats"
+           tooltip="It’s not possible to reduce the number of seats while all seats are occupied"
+           *ngIf="previousButtonDisabled"
+           placement="left">
+      </div>
+    </button>
+    <span class="service-feature__amount">
+      {{ totalQuantity }}
+    </span>
+    <button type="button" class="service-feature__button"
+            [class.service-feature__button--green]="initQuantity < totalQuantity"
+            (click)="totalQuantity = totalQuantity + 1">
+      <span class="icon icon--plus icon--size-16px" [class.icon--green]="initQuantity < totalQuantity"></span>
+    </button>
+  </div>
+</div>

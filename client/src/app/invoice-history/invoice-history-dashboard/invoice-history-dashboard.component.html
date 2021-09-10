@@ -1,0 +1,51 @@
+<div class="d-flex align-items-center justify-content-between">
+  <div class="d-flex align-items-center justify-content-start mb--24">
+    <h1 class="title">
+      Invoice history
+    </h1>
+    <!-- Payment Status -->
+    <span class="status-label" *ngIf="status" [ngClass]="status.className">
+    {{ status.name | titlecase }} subscription
+  </span>
+    <!-- /Payment Status -->
+  </div>
+  <div class="invoice-filter">
+    <div class="invoice-filter__button"
+         (click)="isFilterOpen = !isFilterOpen"
+         [class.invoice-filter__button--active]="isFilterOpen">
+      <span>{{ selectedFilter }}</span>
+      <span class="icon ml--4"
+            [ngClass]="isFilterOpen ? 'icon--arrow-drop-up icon--gold' : 'icon--arrow-drop-down'"></span>
+    </div>
+    <ul class="invoice-filter__list" *ngIf="isFilterOpen">
+      <li (click)="selectFilter('all')">
+        All Invoices
+      </li>
+      <li (click)="selectFilter('monthly')">
+        Monthly Payments
+      </li>
+      <li (click)="selectFilter('other')">
+        Other Payments
+      </li>
+      <li (click)="selectFilter('oneTime')">
+        One-time Payments
+      </li>
+    </ul>
+  </div>
+</div>
+<div class="invoices-list">
+  <div *ngFor="let invoice of invoicesList; let index = index; trackBy: trackBy">
+    <div class="date-header"
+         *ngIf="ifDateHidden(invoicesList[index], invoicesList[index -1])">
+      <span class="date-header__text">
+        {{ invoice?.transaction?.createdAt | date: 'MMMM, y' }}
+      </span>
+      <!-- Temporary hide for next Release -->
+      <!--button class="button button--small button--ghost">
+        Download Monthly Invoice
+      </button -->
+    </div>
+    <ai-invoice-history-invoice [invoice]="invoice">
+    </ai-invoice-history-invoice>
+  </div>
+</div>

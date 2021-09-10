@@ -1,0 +1,105 @@
+<div class="details">
+  <div class="row m-0 details__head">
+    <div class="details__service-icon service-icon {{ service.slug }}"></div>
+    <div class="details__service-name">{{ service.name }}</div>
+  </div>
+  <div class="details__container">
+    <form class="row m-0 details__rate-inputs-section"
+          [formGroup]="priceForm"
+          (ngSubmit)="onSubmit()">
+      <div class="details__inputs-section">
+        <div class="details__input-section">
+          <label  class="details__input-label"
+                  [hidden]="submitted && (priceForm.get('price').invalid || priceForm.get('startFrom').hasError('required'))">
+            Price per hour (USD)
+          </label>
+          <label  class="details__input-label error-message"
+                  *ngIf="priceForm.get('price').hasError('min') && submitted">
+            Please enter a positive number for price
+          </label>
+          <label  class="details__input-label error-message"
+                  *ngIf="priceForm.get('price').hasError('required') && submitted">
+            Price is required
+          </label>
+          <label  class="details__input-label error-message"
+                  *ngIf="priceForm.get('startFrom').hasError('required') && submitted && !price.invalid">
+            Date is required
+          </label>
+          <div  class="details__input input-wrap input-wrap--contained input-wrap--small"
+                [class.input-wrap--error]="submitted && priceForm.get('price').invalid">
+            <input  type="number"
+                    formControlName="price"
+                    class="input-wrap__input">
+          </div>
+
+        </div>
+
+        <!-- Uncomment when adding other billing features -->
+
+        <!-- <div class="details__input-section">
+          <label class="details__input-label">1 000 DB entries</label>
+          <div class="details__input input-wrap input-wrap--contained input-wrap--small">
+            <input type="number" class="input-wrap__input" [disabled]='!changeRateMode'>
+          </div>
+        </div>
+        <div class="details__input-section">
+          <label class="details__input-label">1 GB drive</label>
+          <div class="details__input input-wrap input-wrap--contained input-wrap--small">
+            <input type="number" class="input-wrap__input" [disabled]='!changeRateMode'>
+          </div>
+        </div> -->
+      </div>
+      <div class="details__change-rate-sections">
+        <button type="button"
+                class="btn btn-link details__change-rate-btn pr-0"
+                (click)="changeRateModeOn()"
+                *ngIf="!changeRateMode">Change rate</button>
+        <div  class="input-wrap input-wrap--date-contained"
+              [class.input-wrap--error]="submitted && priceForm.get('startFrom').invalid"
+              *ngIf="changeRateMode">
+          <input  [minDate]="minDate"
+                  type="text"
+                  formControlName="startFrom"
+                  placeholder="Choose date"
+                  class="input-wrap__input"
+                  bsDatepicker
+                  readonly
+                  [bsConfig]="{ showWeekNumbers: false, dateInputFormat: 'MMM D, YYYY'}"
+                  [value]="startFrom.value | date: 'MMM d,yyyy'">
+        </div>
+      </div>
+
+      <div  class="row details__buttons-section"
+            *ngIf="changeRateMode">
+        <button type="button"
+                class="btn btn-link details__cancel-btn ml-auto"
+                (click)="changeRateModeOff()">Cancel</button>
+        <button type="submit"
+                class="btn btn-primary btn-medium details__save-btn">
+          Save changes
+        </button>
+      </div>
+    </form>
+    <div class="details__history-container">
+      <div class="details__history-title">Billing history changes</div>
+      <hr class="details__hr">
+      <ul class="details__dates-list" *ngIf="servicePrices && servicePrices.length;">
+        <li class="details__date-item row m-0" *ngFor="let price of servicePrices; let i = index">
+          <div class="details__date">{{ price.startFrom | date: 'MMM dd, yyyy' }}</div>
+          <span class="details__date-divider"></span>
+          <div class="details__interval">
+            <span class="details__interval--white">
+              {{ convertPrice(price.pricePerSecond) | currency: 'USD' }}
+            </span>
+          </div>
+          <span (click)="deletePrice(price)"
+                class="details__remove-icon icon icon--delete icon--red"></span>
+        </li>
+      </ul>
+      <span class="details__no-history"
+            *ngIf="!servicePrices || !servicePrices.length">
+        No billing history yet
+      </span>
+    </div>
+  </div>
+</div>

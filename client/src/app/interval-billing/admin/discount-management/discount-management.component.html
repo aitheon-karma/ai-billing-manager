@@ -1,0 +1,52 @@
+<div class="discount" *ngIf="!formMode">
+  <div class="discount__head">
+    <div class="discount__head-left">
+      <h3 class="discount__title">Discount management</h3>
+      <div class="discount__subtitle">Providing discounts and packages of hours and disk space</div>
+    </div>
+    <div class="discount__head-right">
+      <button class="discount__create-btn btn btn-link" (click)="startFormMode()"><i class="icon icon--plus icon--active icon--size-16px"></i> create discount</button>
+    </div>
+  </div>
+  <hr class="discount__hr">
+  <div class="discount__lsit">
+    <div class="discount__item" [class.discount__item--disabled]="!checked">
+      <div class="discount__item-info-section">
+        <div class="discount__item-title">Our best discount</div>
+        <div class="discount__item-description">Buy 100 hours with 30% discount!</div>
+      </div>
+      <div class="discount__item-date-section">
+        Jan 12 08:56 AM
+      </div>
+      <div class="discount__item-controls-section">
+        <button class="discount__details-btn btn btn-link" (click)="startFormMode()">Details</button>
+        <span class="discount__copy icon icon--size-16px icon--duplicate icon--dynamic"></span>
+        <span class="discount__remove icon icon--size-16px icon--delete icon--dynamic"></span>
+        <label class="discount__switch switch">
+          <input class="switch__input" name="switchExample" type="checkbox" (click)="toggleSwitch($event)">
+          <span class="switch__toggle"></span>
+        </label>
+      </div>
+    </div>
+    <div class="discount__item" [class.discount__item--disabled]="!checked">
+      <div class="discount__item-info-section">
+        <div class="discount__item-title">Our best discount</div>
+        <div class="discount__item-description">Buy 100 hours with 30% discount!</div>
+      </div>
+      <div class="discount__item-date-section">
+        Jan 12 08:56 AM
+      </div>
+      <div class="discount__item-controls-section">
+        <button class="discount__details-btn btn btn-link" (click)="startFormMode()">Details</button>
+        <span class="discount__copy icon icon--size-16px icon--duplicate icon--dynamic"></span>
+        <span class="discount__remove icon icon--size-16px icon--delete icon--dynamic"></span>
+        <label class="discount__switch switch">
+          <input class="switch__input" name="switchExample" type="checkbox" (click)="toggleSwitch($event)">
+          <span class="switch__toggle"></span>
+        </label>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ai-discount-form (formMode)="formMode=$event" *ngIf=formMode></ai-discount-form>

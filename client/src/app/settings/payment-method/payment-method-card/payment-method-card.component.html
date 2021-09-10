@@ -1,0 +1,41 @@
+<div class="payment-card" [class.payment-card--add]="type === 'add'">
+  <div *ngIf="type === 'add' else cardBlock"
+       class="d-flex flex-column align-items-center justify-content-center">
+    <span class="icon icon--plus"></span>
+    <span class="pt--8">add payment method</span>
+  </div>
+  <ng-template #cardBlock>
+    <div class="d-flex p--16">
+      <div class="d-flex flex-column flex-grow-1">
+        <div class="d-flex align-items-center justify-content-between">
+          <div class="payment-card__logo"
+               [ngClass]="getCardTypeLogo(card.type)">
+          </div>
+          <div class="radio" (click)="setCardAsMain(card, $event)">
+            <input class="radio__input"
+                   [id]="'mainCard' + card.lastFourDigits"
+                   [name]="'mainCard' + card.lastFourDigits"
+                   [value]="'mainCard' + card.lastFourDigits"
+                   type="radio"
+                   [checked]="card?.isMain"
+                   tabindex="1">
+            <label class="radio__label" [for]="'mainCard' + card.lastFourDigits">Main Card</label>
+          </div>
+        </div>
+        <span class="payment-card__title">
+          {{ card.type | titlecase }} <b>&middot;&middot;&middot;&middot;</b> {{ card.lastFourDigits }}
+        </span>
+        <span class="payment-card__date">
+          expired date {{ card.expirationMonth }}/{{ card.expirationYear }}
+        </span>
+      </div>
+    </div>
+    <div class="payment-card__footer p--16">
+      <button type="button"
+              class="button button--small button--ghost"
+              (click)="deleteCard(card)">
+        Delete
+      </button>
+    </div>
+  </ng-template>
+</div>
